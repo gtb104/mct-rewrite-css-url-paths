@@ -24,7 +24,7 @@
     "url",
     "relative",
     "path",
-    "paths",
+    "paths"
   ],
   "license": "MIT",
   "main": "index.js"
