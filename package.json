@@ -1,0 +1,18 @@
+{
+  "name": "mct-rewrite-css-url-paths",
+  "version": "0.0.1",
+  "description": "This Mimosa-Combine Transform package will rewrite relative url paths for images to account for the fact that mimosa-combine breaks the relative path upon execution.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "www.git.com"
+  },
+  "keywords": [
+    "mimosa"
+  ],
+  "author": "Geoffrey Bell <gtb104@yahoo.com> (https://gtb104.wordpress.com/)",
+  "license": "MIT"
+}
