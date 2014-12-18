@@ -1,6 +1,10 @@
 var path = require('path');
 
 module.exports = function( inputText, inputName, outputName ) {
+  if (!inputText || !inputName || !outputName) {
+    return inputText;
+  }
+
   var transformedText = inputText;
   var regex = /url\(\\?['"]?(\/?[\w_-]*\/)*([\w-_]+\.\w{3,4})\\?['"]?\)/g;
   // Here's the breakdown of this regex given the following example string
