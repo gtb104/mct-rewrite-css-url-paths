@@ -5,16 +5,22 @@ module.exports = function( inputText, inputName, outputName ) {
     return inputText;
   }
 
-  var transformedText = inputText;
-  var regex = /url\(\\?['"]?(\/?[\w_-]*\/)*([\w-_]+\.\w{3,4})\\?['"]?\)/g;
+  // Transform Windows paths
+  inputName = inputName.replace(/\\/g, '/').replace(/[cC]:/g, '');
+  outputName = outputName.replace(/\\/g, '/').replace(/[cC]:/g, '');
+
+  var transformedText = inputText,
+      regex = /url\((?:\\?['"])?(.*?)([\w-_]+\.\w{3,4})\\?['"]?\)/g,
+      found = inputText.match(regex);
+
   // Here's the breakdown of this regex given the following example string
   //   background-image: url(\'images/spritesheet.png\');
   //
   // It is looking for the string "url(" followed by an optional "\" and
   // optional single or double quote.
   //
-  // 1st Capturing group (.+[\/])? is for the path if specified.
-  // It is looking for any character followed by a "/". This entire
+  // 1st Capturing group (.*?) is for the path if specified.
+  // It is looking for any character using a lazy quantifier. This entire
   // string is optional if no path is specified for the file.
   //   $1 = images/
   //
@@ -25,11 +31,14 @@ module.exports = function( inputText, inputName, outputName ) {
   //
   // It is looking for an optional '\' character followed by an optional
   // single or double quote, followed by a ")".
-  var found = inputText.match(regex);
+
   if (found) {
     var relPath = path.relative(path.dirname(outputName), path.dirname(inputName));
-    relPath = relPath.replace(/\\\\/g, '/');// convert windows paths to web paths
-    transformedText = inputText.replace(regex, 'url(' + relPath + '/$1$2)');
+    transformedText = inputText.replace(regex, function( match, cg1, cg2 ) {
+      // replace a leading ./ with / if it exists
+      cg1 = cg1.replace(/^\.\//, '');
+      return 'url(' + relPath + '/' + cg1 + cg2 + ')';
+    });
   }
   return transformedText;
 };
