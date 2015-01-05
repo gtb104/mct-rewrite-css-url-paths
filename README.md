@@ -22,3 +22,7 @@ combine: {
           require('mct-rewrite-css-url-paths')
         ]
 ```
+
+## Testing
+
+Run `npm test` to execute test suite.

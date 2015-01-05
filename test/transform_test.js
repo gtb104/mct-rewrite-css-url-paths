@@ -11,6 +11,16 @@ describe("the transform", function() {
     expect(transformedText).to.eql("url(foo.png");
   });
 
+  it('should ignore VML urls', function() {
+    var transformedText = transform('url(#default#VML)', '/vendor/leaflet.draw/leaflet.draw.css');
+    expect(transformedText).to.eql('url(#default#VML)');
+  });
+
+  it('should ignore data uri urls', function() {
+    var transformedText = transform('url(data:image/gif;base64,R0lGODlhGAAYACIiIiM)', '/vendor/foo/style.css');
+    expect(transformedText).to.eql('url(data:image/gif;base64,R0lGODlhGAAYACIiIiM)');
+  });
+
   describe("should handle different formats for urls", function() {
 
     it("including quoted urls", function() {

@@ -10,7 +10,7 @@ module.exports = function( inputText, inputName, outputName ) {
   outputName = outputName.replace(/\\/g, '/').replace(/[cC]:/g, '');
 
   var transformedText = inputText,
-      regex = /url\((?:\\?['"])?(.*?)([\w-_]+\.\w{3,4})\\?['"]?\)/g,
+      regex = /url\((?:\\?['"])?([\w\/\\._-]*?)([\w-_]+\.\w{3,4})\\?['"]?\)/g,
       found = inputText.match(regex);
 
   // Here's the breakdown of this regex given the following example string
@@ -19,7 +19,7 @@ module.exports = function( inputText, inputName, outputName ) {
   // It is looking for the string "url(" followed by an optional "\" and
   // optional single or double quote.
   //
-  // 1st Capturing group (.*?) is for the path if specified.
+  // 1st Capturing group ([\w\/\\._-]*?) is for the path if specified.
   // It is looking for any character using a lazy quantifier. This entire
   // string is optional if no path is specified for the file.
   //   $1 = images/
